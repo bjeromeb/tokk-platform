@@ -1,4 +1,4 @@
-# Bedrock Claude Chat
+# Tokk Fitness Chat
 
 ![](https://github.com/aws-samples/bedrock-claude-chat/actions/workflows/cdk.yml/badge.svg)
 
@@ -80,7 +80,7 @@ You can specify the following parameters during deployment to enhance security a
 - **--disable-ipv6**: Disable connections over IPv6. (default: enabled)
 - **--allowed-signup-email-domains**: Comma-separated list of allowed email domains for sign-up. (default: no domain restriction)
 - **--bedrock-region**: Define the region where bedrock is available. (default: us-east-1)
-- **--version**: The version of Bedrock Claude Chat to deploy. (default: latest version in development)
+- **--version**: The version of Tokk Fitness Chat to deploy. (default: latest version in development)
 
 #### Example command with parameters:
 
@@ -102,7 +102,7 @@ The sign-up screen will appear as shown above, where you can register your email
 > Without setting the optional parameter, this deployment method allows anyone who knows the URL to sign up. For production use, it is strongly recommended to add IP address restrictions and disable self-signup to mitigate security risks (you can define allowed-signup-email-domains to restrict users so that only email addresses from your company’s domain can sign up). Use both ipv4-ranges and ipv6-ranges for IP address restrictions, and disable self-signup by using disable-self-register when executing ./bin.
 
 > [!TIP]
-> If the `Frontend URL` does not appear or Bedrock Claude Chat does not work properly, it may be a problem with the latest version. In this case, please add `--version "v1.2.6"` to the parameters and try deployment again.
+> If the `Frontend URL` does not appear or Tokk Fitness Chat does not work properly, it may be a problem with the latest version. In this case, please add `--version "v1.2.6"` to the parameters and try deployment again.
 
 ## Architecture
 
@@ -314,7 +314,7 @@ See [here](./docs/RAG.md).
 
 ## Contributors
 
-[![bedrock claude chat contributors](https://contrib.rocks/image?repo=aws-samples/bedrock-claude-chat&max=1000)](https://github.com/aws-samples/bedrock-claude-chat/graphs/contributors)
+[![Tokk Fitness chat contributors](https://contrib.rocks/image?repo=aws-samples/bedrock-claude-chat&max=1000)](https://github.com/aws-samples/bedrock-claude-chat/graphs/contributors)
 
 ## License
 

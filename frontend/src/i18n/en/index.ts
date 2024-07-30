@@ -6,7 +6,7 @@ const translation = {
       },
     },
     app: {
-      name: 'Bedrock Claude Chat',
+      name: 'Tokk Fitness Chat',
       nameWithoutClaude: 'Bedrock Chat',
       inputMessage: 'Send a message',
       starredBots: 'Starred Bots',

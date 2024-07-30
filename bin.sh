@@ -3,7 +3,7 @@ echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 echo "!!! !!!"
 echo "!!! IMPORTANT NOTICE !!!"
 echo "!!! !!!"
-echo "!!! If you are using Bedrock Claude Chat with a version prior to v1.x !!!"
+echo "!!! If you are using Tokk Fitness Chat with a version prior to v1.x !!!"
 echo "!!! (e.g., v0.4.x), please follow the migration guide before proceeding. !!!"
 echo "!!! !!!"
 echo "!!! Migrating from an older version requires specific steps to ensure !!!"
@@ -67,7 +67,7 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-StackName="CodeBuildForDeploy"
+StackName="TokkAIPlatform"
 
 # Deploy the CloudFormation stack
 aws cloudformation deploy \

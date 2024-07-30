@@ -42,8 +42,8 @@ export type AttachmentType = {
 
 export type ThinkingAction =
   | {
-      type: 'doing';
-    }
+    type: 'doing';
+  }
   | { type: 'init' };
 
 const NEW_MESSAGE_ID = {
@@ -130,7 +130,7 @@ const useChatState = create<{
     ) => {
       set(() => ({
         chats: produce(get().chats, (draft) => {
-          // 追加対象が子ノードの場合は親ノードに参照情報を追加
+          //If the node to be added is a child node, add the reference information to the parent node.
           if (draft[id] && parentMessageId && parentMessageId !== 'system') {
             draft[id][parentMessageId] = {
               ...draft[id][parentMessageId],
@@ -168,14 +168,14 @@ const useChatState = create<{
         chats: produce(state.chats, (draft) => {
           const childrenIds = [...draft[id][messageId].children];
 
-          // childrenに設定されているノードも全て削除
+          // All nodes set as children are also deleted.
           while (childrenIds.length > 0) {
             const targetId = childrenIds.pop()!;
             childrenIds.push(...draft[id][targetId].children);
             delete draft[id][targetId];
           }
 
-          // 削除対象のノードを他ノードの参照から削除
+          // Remove the node to be deleted from other nodes' references
           Object.keys(draft[id]).forEach((key) => {
             const idx = draft[id][key].children.findIndex(
               (c) => c === messageId
@@ -331,7 +331,7 @@ const useChat = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conversationId]);
 
-  // 画面に即時反映させるために、Stateを更新する処理
+  // Update the state to reflect it on the screen immediately
   const pushNewMessage = (
     parentMessageId: string | null,
     messageContent: MessageContent
@@ -371,7 +371,7 @@ const useChat = () => {
     const isNewChat = conversationId ? false : true;
     const newConversationId = ulid();
 
-    // エラーリトライ時に同期が間に合わないため、Stateを直接参照
+    // When retrying due to an error, synchronization is not possible, so the state is referenced directly.
     const tmpMessages = convertMessageMapToArray(
       useChatState.getState().chats[conversationId] ?? {},
       currentMessageId
@@ -575,23 +575,23 @@ const useChat = () => {
   };
 
   /**
-   * 再生成
-   * @param props content: 内容を上書きしたい場合に設定  messageId: 再生成対象のmessageId  botId: ボットの場合は設定する
-   */
+   * Regeneration
+   * @param props content:Set if you want to overwrite the content messageId: messageId to be regenerated botId: Set if this is a bot
+  */
   const regenerate = (props?: {
     content?: string;
     messageId?: string;
     bot?: BotInputType;
   }) => {
     let index: number = -1;
-    // messageIdが指定されている場合は、指定されたメッセージをベースにする
+    //If messageId is specified, it will be based on the specified message.
     if (props?.messageId) {
       index = messages.findIndex((m) => m.id === props.messageId);
     }
 
-    // 最新のメッセージがUSERの場合は、エラーとして処理する
+    //If the most recent message is USER, treat it as an error.
     const isRetryError = messages[messages.length - 1].role === 'user';
-    // messageIdが指定されていない場合は、最新のメッセージを再生成する
+    // If messageId is not specified, regenerate the most recent message.
     if (index === -1) {
       index = isRetryError ? messages.length - 1 : messages.length - 2;
     }
@@ -605,7 +605,7 @@ const useChat = () => {
       }
     });
 
-    // Stateを書き換え後の内容に更新
+    // Update the state to the new content
     if (props?.content) {
       editMessage(conversationId, parentMessage.id, props.content);
     }
@@ -625,7 +625,7 @@ const useChat = () => {
 
     setPostingMessage(true);
 
-    // 画面に即時反映するために、Stateを更新する
+    //Update the state to reflect the changes on the screen immediately.
     if (isRetryError) {
       pushMessage(
         conversationId ?? '',
@@ -714,7 +714,7 @@ const useChat = () => {
     getPostedModel,
     getShouldContinue,
     continueGenerate,
-    // エラーのリトライ
+    // Error retries
     retryPostChat: (params: { content?: string; bot?: BotInputType }) => {
       const length_ = messages.length;
       if (length_ === 0) {
@@ -722,21 +722,21 @@ const useChat = () => {
       }
       const latestMessage = messages[length_ - 1];
       if (latestMessage.sibling.length === 1) {
-        // 通常のメッセージ送信時
-        // エラー発生時の最新のメッセージはユーザ入力;
+        // When sending a normal message
+        // Last message when error occurred is user input;
         removeMessage(conversationId, latestMessage.id);
         postChat({
           content: params.content ?? latestMessage.content[0].body,
           bot: params.bot
             ? {
-                botId: params.bot.botId,
-                hasKnowledge: params.bot.hasKnowledge,
-                hasAgent: params.bot.hasAgent,
-              }
+              botId: params.bot.botId,
+              hasKnowledge: params.bot.hasKnowledge,
+              hasAgent: params.bot.hasAgent,
+            }
             : undefined,
         });
       } else {
-        // 再生成時
+        // When regenerated
         regenerate({
           content: params.content ?? latestMessage.content[0].body,
           bot: params.bot,

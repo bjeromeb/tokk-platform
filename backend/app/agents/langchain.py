@@ -33,7 +33,7 @@ DEFAULT_GENERATION_CONFIG = (
 class BedrockLLM(LLM):
     """A wrapper class for the LangChain's interface.
     Note that this class only handle simple prompt template and can not handle multi-tern conversation.
-    Reason is that LangChain's interface and Bedrock Claude Chat interface are not fully compatible.
+    Reason is that LangChain's interface and Tokk Fitness Chat interface are not fully compatible.
     """
 
     model: type_model_name
