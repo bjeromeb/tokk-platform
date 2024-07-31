@@ -2,7 +2,7 @@ const translation = {
   translation: {
     app: {
       name: 'Tokk Fitness Chat',
-      nameWithoutClaude: 'Bedrock Chat',
+      nameWithoutClaude: 'Tokk Chat',
       inputMessage: 'Nachricht senden',
       starredBots: 'Favorisierte Bots',
       recentlyUsedBots: 'Zuletzt genutzte Bots',

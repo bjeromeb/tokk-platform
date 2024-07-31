@@ -46,7 +46,7 @@ export interface BedrockChatStackProps extends StackProps {
 export class BedrockChatStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: BedrockChatStackProps) {
     super(scope, id, {
-      description: "Bedrock Chat Stack (uksb-1tupboc46)",
+      description: "Tokk Chat Stack (uksb-1tupboc46)",
       ...props,
     });
     const cronSchedule = createCronSchedule(props.rdsSchedules);
