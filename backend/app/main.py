@@ -40,10 +40,10 @@ if not is_published_api:
         {"name": "api_publication", "description": "API Publication API"},
         {"name": "admin", "description": "Admin API"},
     ]
-    title = "Tokk Fitness Chat"
+    title = "Tokk AI Platform"
 else:
     openapi_tags = [{"name": "published_api", "description": "Published API"}]
-    title = "Tokk Fitness Chat Published API"
+    title = "Tokk AI Platform Published API"
 
 
 app = FastAPI(

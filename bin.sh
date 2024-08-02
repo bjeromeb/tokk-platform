@@ -3,7 +3,7 @@ echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 echo "!!! !!!"
 echo "!!! IMPORTANT NOTICE !!!"
 echo "!!! !!!"
-echo "!!! If you are using Tokk Fitness Chat with a version prior to v1.x !!!"
+echo "!!! If you are using Tokk AI Platform with a version prior to v1.x !!!"
 echo "!!! (e.g., v0.4.x), please follow the migration guide before proceeding. !!!"
 echo "!!! !!!"
 echo "!!! Migrating from an older version requires specific steps to ensure !!!"

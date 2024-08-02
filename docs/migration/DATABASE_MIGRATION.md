@@ -1,6 +1,6 @@
 # Database Migration Guide
 
-This guide outlines the steps to migrate data when performing an update of Tokk Fitness Chat which contains an Aurora cluster replacement. The following procedure ensures a smooth transition while minimizing downtime and data loss.
+This guide outlines the steps to migrate data when performing an update of Tokk AI Platform which contains an Aurora cluster replacement. The following procedure ensures a smooth transition while minimizing downtime and data loss.
 
 ## Overview
 

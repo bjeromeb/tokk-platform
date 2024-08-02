@@ -10,7 +10,7 @@ import {
 import { BedrockKnowledgeBaseStack } from "../lib/bedrock-knowledge-base-stack";
 import { Analyzer } from "@cdklabs/generative-ai-cdk-constructs/lib/cdk-lib/opensearch-vectorindex";
 
-describe("Tokk Chat Stack Test", () => {
+describe("Tokk Platform Stack Test", () => {
   test("Identity Provider Generation", () => {
     const app = new cdk.App();
 

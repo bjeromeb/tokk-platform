@@ -6,8 +6,8 @@ const translation = {
       },
     },
     app: {
-      name: 'Tokk Fitness Chat',
-      nameWithoutClaude: 'Tokk Chat',
+      name: 'Tokk AI Platform',
+      nameWithoutClaude: 'Tokk Platform',
       inputMessage: 'Enviar un mensaje',
       starredBots: 'Bots Favoritos',
       recentlyUsedBots: 'Bots Usados Recientemente',

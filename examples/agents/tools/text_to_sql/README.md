@@ -14,7 +14,7 @@ The Text-to-SQL tool is designed to simplify the interaction with SQL databases 
 
 The tool is built to support PostgreSQL databases and utilizes the pg8000 adapter for database interactions.
 
-**Note that current implementation refer the same aurora database as pgvector provisioned by the Tokk Fitness Chat.**
+**Note that current implementation refer the same aurora database as pgvector provisioned by the Tokk AI Platform.**
 
 ## How to enable this tool
 

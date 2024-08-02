@@ -14,8 +14,8 @@ export default defineConfig({
       },
       injectRegister: 'auto',
       manifest: {
-        name: 'Tokk Fitness Chat',
-        short_name: 'Tokk Chat',
+        name: 'Tokk AI Platform',
+        short_name: 'Tokk Platform',
         description: 'AWS-native chatbot using Bedrock + Claude',
         start_url: '/index.html',
         display: 'standalone',

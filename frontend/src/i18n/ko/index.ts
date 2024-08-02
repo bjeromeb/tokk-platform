@@ -4,8 +4,8 @@
 const translation = {
   translation: {
     app: {
-      name: 'Tokk Fitness Chat',
-      nameWithoutClaude: 'Tokk Chat',
+      name: 'Tokk AI Platform',
+      nameWithoutClaude: 'Tokk Platform',
       inputMessage: '입력해 주십시오',
     },
     deleteDialog: {
