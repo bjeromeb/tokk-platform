@@ -24,7 +24,7 @@ const AuthAmplify: React.FC<Props> = ({ socialProviders, children }) => {
         Header: () => (
           <div>
             <div className='Image' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-              <img src="/public/images/tokkai.png" alt="Tokkai Image" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+              <img src="/images/tokkai.png" alt="Tokkai Image" style={{ maxWidth: '100%', maxHeight: '100%' }} />
             </div>
 
             <div className="mb-5 mt-10 flex justify-center text-3xl text-aws-font-color">
