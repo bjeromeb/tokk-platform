@@ -159,6 +159,7 @@ const ChatMessageMarkdown: React.FC<Props> = ({
                 language={match[1]}
                 x
                 PreTag="div"
+                // wrapLines={true}
                 wrapLongLines={true}
               />
             </CopyToClipboard>

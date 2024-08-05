@@ -56,9 +56,12 @@ const AuthCustom: React.FC<Props> = ({ children }) => {
         </div>
       ) : !authenticated ? (
         <div className="flex flex-col items-center gap-4">
-          <div className="mb-5 mt-10 text-4xl text-red-700">
-            {!MISTRAL_ENABLED ? t('app.name') : t('app.nameWithoutClaude')}
-          </div>
+            <div className='Image' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+              <img src="/images/tokkai.png" alt="Tokkai Image" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+            </div>
+            <div className="mb-5 mt-10 text-4xl text-aws-sea-blue">
+              {!MISTRAL_ENABLED ? t('app.name') : t('app.nameWithoutClaude')}
+            </div>
           <Button onClick={() => signIn()} className="px-20 text-xl">
             {t('signIn.button.login')}
           </Button>

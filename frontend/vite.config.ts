@@ -16,13 +16,13 @@ export default defineConfig({
       manifest: {
         name: 'Tokk AI Platform',
         short_name: 'Tokk Platform',
-        description: 'AWS-native chatbot using Bedrock + Claude',
+        description: 'Tokk AWS Based Platform',
         start_url: '/index.html',
         display: 'standalone',
         theme_color: '#232F3E',
         icons: [
           {
-            src: '/images/bedrock_icon_72.png',
+            src: '/images/72.png',
             sizes: '72x72',
             type: 'image/png',
           },
@@ -32,17 +32,17 @@ export default defineConfig({
             type: 'image/png',
           },
           {
-            src: '/images/bedrock_icon_128.png',
+            src: '/images/128.png',
             sizes: '128x128',
             type: 'image/png',
           },
           {
-            src: '/images/bedrock_icon_144.png',
+            src: '/images/144.png',
             sizes: '144x144',
             type: 'image/png',
           },
           {
-            src: '/images/bedrock_icon_152.png',
+            src: '/images/152.png',
             sizes: '152x152',
             type: 'image/png',
           },
@@ -57,13 +57,13 @@ export default defineConfig({
             type: 'image/png',
           },
           {
-            src: '/images/bedrock_icon_512.png',
+            src: '/images/512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
           },
           {
-            src: '/images/bedrock_icon_512.png',
+            src: '/images/512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any',
