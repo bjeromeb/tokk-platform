@@ -49,6 +49,10 @@ from app.vector_search import (
     get_source_link,
     search_related_docs,
 )
+from app.synthetize_speech import synthetize_speech
+
+from pprint import pprint
+
 from ulid import ULID
 
 logger = logging.getLogger(__name__)
@@ -404,6 +408,10 @@ def chat(user_id: str, chat_input: ChatInput) -> ChatOutput:
         conversation.last_message_id = assistant_msg_id
 
     conversation.total_price += price
+
+    # Synthetize speech and store output
+    synthetize_speech(reply_txt,assistant_msg_id)
+
 
     # Store updated conversation
     store_conversation(user_id, conversation)

@@ -13,7 +13,6 @@ from app.repositories.models.conversation import MessageModel
 from app.repositories.models.custom_bot import GenerationParamsModel
 from app.routes.schemas.conversation import type_model_name
 from app.utils import convert_dict_keys_to_camel_case, get_bedrock_client
-
 logger = logging.getLogger(__name__)
 
 BEDROCK_REGION = os.environ.get("BEDROCK_REGION", "us-east-1")
@@ -117,6 +116,7 @@ def compose_args_for_converse_api(
     """Compose arguments for Converse API.
     Ref: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/bedrock-runtime/client/converse_stream.html
     """
+
     arg_messages = []
     for message in messages:
         if message.role not in ["system", "instruction"]:
@@ -203,7 +203,6 @@ def call_converse_api(args: ConverseApiRequest) -> ConverseApiResponse:
         system=system,
         additionalModelRequestFields=additional_model_request_fields,
     )
-
     return response
 
 
