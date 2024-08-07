@@ -2,7 +2,7 @@ import boto3
 import os
 from contextlib import closing
 from boto3.dynamodb.conditions import Key, Attr
-# from pprint import pprint
+from pprint import pprint
 
 MESSAGE_BUCKET = os.environ.get("LARGE_MESSAGE_BUCKET")
 
@@ -41,6 +41,7 @@ def synthetize_speech(textToSpeak,messageId):
                 with open(output, "wb") as file:
                     file.write(stream.read())
 
+    # Upload mp3 to S3 bucket
     s3 = boto3.client('s3')
     s3.upload_file('/tmp/' + messageId,
       MESSAGE_BUCKET,
@@ -50,19 +51,20 @@ def synthetize_speech(textToSpeak,messageId):
     #   Bucket=MESSAGE_BUCKET,
     #   Key= messageId + ".mp3")
     
-    # location = s3.get_bucket_location(Bucket=MESSAGE_BUCKET)
-    # region = location['LocationConstraint']
-    # if region is None:
-    #     url_beginning = "https://s3.amazonaws.com/"
-    # else:
-    #     url_beginning = "https://s3-" + str(region) + ".amazonaws.com/"
-    # url = url_beginning \
-    #         + str(MESSAGE_BUCKET) \
-    #         + "/" \
-    #         + str(messageId) \
-    #         + ".mp3"
+    location = s3.get_bucket_location(Bucket=MESSAGE_BUCKET)
+    region = location['LocationConstraint']
+    if region is None:
+        url_beginning = "https://s3.amazonaws.com/"
+    else:
+        url_beginning = "https://s3-" + str(region) + ".amazonaws.com/"
+    url = url_beginning \
+            + str(MESSAGE_BUCKET) \
+            + "/" \
+            + str(messageId) \
+            + ".mp3"
     
-    # pprint(url)
+    pprint(url)
+    
     # Updating the item in DynamoDB
     # response = table.update_item(
     #     Key={'id':messageId},
