@@ -14,11 +14,13 @@ logger.setLevel(logging.DEBUG)
 
 def synthetize_speech(textToSpeak,messageId):
     text = textToSpeak
-    voice = "Joanna"
+    voice = "Ruth"
     rest = text
     # Because single invocation of the polly synthesize_speech api can
     # transform text with about 3000 characters, we are dividing the
     # post into blocks of approximately 2500 characters.
+    logger.warning("Synthetizing "+ textToSpeak)
+
     textBlocks = []
     while (len(rest) > 2600):
         begin = 0
@@ -36,7 +38,8 @@ def synthetize_speech(textToSpeak,messageId):
         response = polly.synthesize_speech(
             OutputFormat='mp3',
             Text = textBlock,
-            VoiceId = voice
+            VoiceId = voice,
+            Engine="generative"
         )
         # Save the audio stream returned by Amazon Polly on Lambda's temp
         # directory. If there are multiple text blocks, the audio stream
@@ -73,7 +76,7 @@ def synthetize_speech(textToSpeak,messageId):
             + str(messageId) \
             + ".mp3"
     
-    logger.info("Mp3 file saved to ", url)
+    logger.warning("Mp3 file saved to "+ url)
 
     # Updating the item in DynamoDB
     # response = table.update_item(

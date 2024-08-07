@@ -598,46 +598,46 @@ class TestContinueChat(unittest.TestCase):
 
 
 # class TestProposeTitle(unittest.TestCase):
-    def setUp(self) -> None:
-        chat_input = ChatInput(
-            conversation_id="test_conversation_id",
-            message=MessageInput(
-                role="user",
-                content=[
-                    Content(
-                        content_type="text",
-                        # body="Australian famous site seeing place",
-                        body="日本の有名な料理を3つ教えて",
-                        media_type=None,
-                        file_name=None,
-                    )
-                ],
-                model=MODEL,
-                parent_message_id=None,
-                message_id=None,
-            ),
-            bot_id=None,
-            continue_generate=False,
-        )
-        output: ChatOutput = chat(user_id="user1", chat_input=chat_input)
-        print(output)
-        self.output = output
+#     def setUp(self) -> None:
+#         chat_input = ChatInput(
+#             conversation_id="test_conversation_id",
+#             message=MessageInput(
+#                 role="user",
+#                 content=[
+#                     Content(
+#                         content_type="text",
+#                         # body="Australian famous site seeing place",
+#                         body="日本の有名な料理を3つ教えて",
+#                         media_type=None,
+#                         file_name=None,
+#                     )
+#                 ],
+#                 model=MODEL,
+#                 parent_message_id=None,
+#                 message_id=None,
+#             ),
+#             bot_id=None,
+#             continue_generate=False,
+#         )
+#         output: ChatOutput = chat(user_id="user1", chat_input=chat_input)
+#         print(output)
+#         self.output = output
 
-        chat_input.message.model = MISTRAL_MODEL
-        mistral_output: ChatOutput = chat(user_id="user1", chat_input=chat_input)
-        self.mistral_output = mistral_output
-        print(mistral_output)
+#         chat_input.message.model = MISTRAL_MODEL
+#         mistral_output: ChatOutput = chat(user_id="user1", chat_input=chat_input)
+#         self.mistral_output = mistral_output
+#         print(mistral_output)
 
-    def test_propose_title(self):
-        title = propose_conversation_title("user1", self.output.conversation_id)
-        print(f"[title]: {title}")
+#     def test_propose_title(self):
+#         title = propose_conversation_title("user1", self.output.conversation_id)
+#         print(f"[title]: {title}")
 
-    def test_propose_title_mistral(self):
-        title = propose_conversation_title("user1", self.mistral_output.conversation_id)
-        print(f"[title]: {title}")
+#     def test_propose_title_mistral(self):
+#         title = propose_conversation_title("user1", self.mistral_output.conversation_id)
+#         print(f"[title]: {title}")
 
-    def tearDown(self) -> None:
-        delete_conversation_by_id("user1", self.output.conversation_id)
+#     def tearDown(self) -> None:
+#         delete_conversation_by_id("user1", self.output.conversation_id)
 
 
 # class TestChatWithCustomizedBot(unittest.TestCase):

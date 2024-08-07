@@ -410,10 +410,12 @@ def chat(user_id: str, chat_input: ChatInput) -> ChatOutput:
     conversation.total_price += price
 
     # Synthetize speech and store output
+    logger.warning("Synthetizing speach")
     synthetize_speech(reply_txt,conversation.id)
 
 
     # Store updated conversation
+    logger.warning("Storing conversation")
     store_conversation(user_id, conversation)
     # Update bot last used time
     if chat_input.bot_id:

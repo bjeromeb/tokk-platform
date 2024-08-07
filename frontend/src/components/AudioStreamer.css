@@ -1,0 +1,40 @@
+.audio-streamer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin: 0 auto;
+  }
+  
+  .audio-player {
+    display: flex;
+    align-items: center;
+  }
+  
+  .play-pause-button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .play-pause-button:focus {
+    outline: none;
+  }
+  
+  .play-pause-button:hover {
+    background-color: #0056b3;
+  }
+  
