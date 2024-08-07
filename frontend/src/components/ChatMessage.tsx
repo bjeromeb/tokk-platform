@@ -66,6 +66,7 @@ const ChatMessage: React.FC<Props> = (props) => {
           (content) => content.contentType === 'text'
         )
       );
+      
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.chatContent]);

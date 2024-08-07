@@ -2,9 +2,15 @@ import boto3
 import os
 from contextlib import closing
 from boto3.dynamodb.conditions import Key, Attr
-from pprint import pprint
+from botocore.exceptions import ClientError
+import logging
+
 
 MESSAGE_BUCKET = os.environ.get("LARGE_MESSAGE_BUCKET")
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
 
 def synthetize_speech(textToSpeak,messageId):
     text = textToSpeak
@@ -43,9 +49,13 @@ def synthetize_speech(textToSpeak,messageId):
 
     # Upload mp3 to S3 bucket
     s3 = boto3.client('s3')
-    s3.upload_file('/tmp/' + messageId,
-      MESSAGE_BUCKET,
-      messageId + ".mp3")
+    try:
+        response = s3.upload_file('/tmp/' + messageId,
+            MESSAGE_BUCKET,
+            messageId + ".mp3")
+
+    except ClientError as e:
+        logger.error("Mp3 output couldn't be saved: ", e)
     
     # s3.put_object_acl(ACL='public-read',
     #   Bucket=MESSAGE_BUCKET,
@@ -63,8 +73,8 @@ def synthetize_speech(textToSpeak,messageId):
             + str(messageId) \
             + ".mp3"
     
-    pprint(url)
-    
+    logger.info("Mp3 file saved to ", url)
+
     # Updating the item in DynamoDB
     # response = table.update_item(
     #     Key={'id':messageId},
