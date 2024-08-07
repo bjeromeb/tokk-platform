@@ -410,7 +410,7 @@ def chat(user_id: str, chat_input: ChatInput) -> ChatOutput:
     conversation.total_price += price
 
     # Synthetize speech and store output
-    synthetize_speech(reply_txt,assistant_msg_id)
+    synthetize_speech(reply_txt,conversation.id)
 
 
     # Store updated conversation
