@@ -44,6 +44,8 @@ import { SyncStatus } from '../constants';
 import { BottomHelper } from '../features/helper/components/BottomHelper';
 import { useIsWindows } from '../hooks/useIsWindows';
 
+import AudioStreamer from "../components/AudioStreamer";
+
 const MISTRAL_ENABLED: boolean =
   import.meta.env.VITE_APP_ENABLE_MISTRAL === 'true';
 
@@ -382,13 +384,12 @@ const ChatPage: React.FC = () => {
                   {messages?.map((message, idx) => (
                     <div
                       key={idx}
-                      className={`${
-                        message.role === 'assistant' ? 'bg-aws-squid-ink/5' : ''
-                      }`}>
+                      className={`${message.role === 'assistant' ? 'bg-aws-squid-ink/5' : ''
+                        }`}>
                       {messages.length === idx + 1 &&
-                      [AgentState.THINKING, AgentState.LEAVING].some(
-                        (v) => v == agentThinking.value
-                      ) ? (
+                        [AgentState.THINKING, AgentState.LEAVING].some(
+                          (v) => v == agentThinking.value
+                        ) ? (
                         <AgentProcessingIndicator
                           processCount={agentThinking.context.count}
                         />
@@ -403,6 +404,9 @@ const ChatPage: React.FC = () => {
                       <div className="w-full border-b border-aws-squid-ink/10"></div>
                     </div>
                   ))}
+                  {messages?.length > 0 && (
+                    <AudioStreamer objectKey={conversationId} />
+                  )}
                 </>
               )}
               {hasError && (
@@ -427,6 +431,7 @@ const ChatPage: React.FC = () => {
               )}
             </div>
           </div>
+
         </section>
       </div>
 
