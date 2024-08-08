@@ -21,6 +21,7 @@ def synthetize_speech(textToSpeak,messageId):
     # post into blocks of approximately 2500 characters.
     logger.warning("Synthetizing "+ textToSpeak)
 
+
     textBlocks = []
     while (len(rest) > 2600):
         begin = 0
@@ -65,15 +66,16 @@ def synthetize_speech(textToSpeak,messageId):
 
     # Upload mp3 to S3 bucket
     s3 = boto3.client('s3')
+
+    s3.put_object(
+        Bucket=MESSAGE_BUCKET,
+        Key=messageId + ".txt",
+        Body=text,
+    )
     try:
         response = s3.upload_file('/tmp/' + messageId,
             MESSAGE_BUCKET,
             messageId + ".mp3")
-        response = s3.put_object(
-            Bucket=MESSAGE_BUCKET,
-            Key=messageId + ".txt",
-            Body=text,
-        )
 
     except ClientError as e:
         logger.error("Mp3 output couldn't be saved: ", e)
