@@ -26,6 +26,8 @@ from app.vector_search import filter_used_results, get_source_link, search_relat
 from boto3.dynamodb.conditions import Attr, Key
 from ulid import ULID
 
+from app.synthetize_speech import synthetize_speech
+
 WEBSOCKET_SESSION_TABLE_NAME = os.environ["WEBSOCKET_SESSION_TABLE_NAME"]
 
 dynamodb_client = boto3.resource("dynamodb")
@@ -140,7 +142,13 @@ def process_chat_input(
 
         conversation.total_price += price
 
-        # Store conversation before finish streaming so that front-end can avoid 404 issue
+         # Synthetize speech and store output
+        logger.warning("Synthetizing speach")
+        synthetize_speech(response["output"],conversation.id)
+
+
+        # Store updated conversation
+        logger.warning("Storing conversation")
         store_conversation(user_id, conversation)
 
         # Send signal so that frontend can close the connection
