@@ -404,7 +404,7 @@ const ChatPage: React.FC = () => {
                       <div className="w-full border-b border-aws-squid-ink/10"></div>
                     </div>
                   ))}
-                  {messages?.length > 0 && !AgentState.THINKING && (
+                  {messages?.length > 0 && agentThinking.value == AgentState.THINKING && (
                     <AudioStreamer objectKey={conversationId} />
                   )}
                 </>
