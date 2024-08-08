@@ -40,21 +40,24 @@ def synthetize_speech(textToSpeak,messageId):
         Key=messageId + ".txt",
         Body=text,
     )
-    
-    # For each block, invoke Polly API, which transforms text into audio
-    polly = boto3.client('polly')
-    pollyResponse = polly.synthesize_speech(
-        OutputFormat='mp3',
-        Text = textToSpeak,
-        VoiceId = voice,
-        Engine="generative"
-    )
 
-    if 'AudioStream' in pollyResponse:
-        output = os.path.join("/tmp/", messageId)
-        with open(output, "wb") as file:
-        #with open('/tmp/speech.mp3', 'wb') as file:
-            file.write(pollyResponse['AudioStream'].read())
+    try:
+        # For each block, invoke Polly API, which transforms text into audio
+        polly = boto3.client('polly')
+        pollyResponse = polly.synthesize_speech(
+            OutputFormat='mp3',
+            Text = textToSpeak,
+            VoiceId = voice,
+            Engine="generative"
+        )
+
+        if 'AudioStream' in pollyResponse:
+            output = os.path.join("/tmp/", messageId)
+            with open(output, "wb") as file:
+            #with open('/tmp/speech.mp3', 'wb') as file:
+                file.write(pollyResponse['AudioStream'].read())
+    except:
+        logger.error("Mp3 Polly Synthetize Speech error")
 
     # for textBlock in textBlocks:
     #     response = polly.synthesize_speech(
