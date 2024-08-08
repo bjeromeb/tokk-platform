@@ -8,8 +8,8 @@ import logging
 
 MESSAGE_BUCKET = os.environ.get("LARGE_MESSAGE_BUCKET")
 
+logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(name)s - %(message)s")
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
 
 
 def synthetize_speech(textToSpeak,messageId):
