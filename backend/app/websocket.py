@@ -264,6 +264,10 @@ def process_chat_input(
         # If continued, save the state
         conversation.should_continue = arg.stop_reason == "max_tokens"
 
+        # Synthetize speech and store output
+        logger.warning("Synthetizing speach")
+        synthetize_speech(arg.full_token,conversation.id)
+
         # Store conversation before finish streaming so that front-end can avoid 404 issue
         store_conversation(user_id, conversation)
         last_data_to_send = json.dumps(
