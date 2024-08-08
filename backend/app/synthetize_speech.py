@@ -90,7 +90,7 @@ def synthetize_speech(textToSpeak,messageId):
     #   Key= messageId + ".mp3")
     
     location = s3.get_bucket_location(Bucket=MESSAGE_BUCKET)
-    region = location['LocationConstraint']
+    region = os.environ.get("REGION")
     if region is None:
         url_beginning = "https://s3.amazonaws.com/"
     else:

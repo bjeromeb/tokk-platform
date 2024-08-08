@@ -143,12 +143,12 @@ def process_chat_input(
         conversation.total_price += price
 
          # Synthetize speech and store output
-        logger.warning("Synthetizing speach")
-        synthetize_speech("message.content",conversation.id+"zz")
+        # logger.info("Synthetizing speach")
+        # synthetize_speech("message.content",conversation.id+"zz")
 
 
         # Store updated conversation
-        logger.warning("Storing conversation")
+        # logger.warning("Storing conversation")
         store_conversation(user_id, conversation)
 
         # Send signal so that frontend can close the connection
@@ -265,8 +265,8 @@ def process_chat_input(
         conversation.should_continue = arg.stop_reason == "max_tokens"
 
         # Synthetize speech and store output
-        logger.warning("Synthetizing speach")
-        synthetize_speech("message.content",conversation.id+"yy")
+        # logger.info("Synthetizing speach")
+        # synthetize_speech("message.content",conversation.id+"yy")
 
         # Store conversation before finish streaming so that front-end can avoid 404 issue
         store_conversation(user_id, conversation)
