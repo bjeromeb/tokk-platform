@@ -20,8 +20,8 @@ const AudioStreamer: React.FC<AudioStreamerProps> = ({ objectKey }) => {
   const playerRef = useRef<ReactPlayer>(null);
   const bucketName = AUDIO_FILE_BUCKET;
   const region = REGION;
-  console.log("region: ", region);
-  console.log("bucketName: ", bucketName);
+  // console.log("region: ", region);
+  // console.log("bucketName: ", bucketName);
 
   useEffect(() => {
       const fetchAudioUrl = async () => {

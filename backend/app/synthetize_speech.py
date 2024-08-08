@@ -34,21 +34,34 @@ def synthetize_speech(textToSpeak,messageId):
 
     # For each block, invoke Polly API, which transforms text into audio
     polly = boto3.client('polly')
-    for textBlock in textBlocks:
-        response = polly.synthesize_speech(
-            OutputFormat='mp3',
-            Text = textBlock,
-            VoiceId = voice,
-            Engine="generative"
-        )
-        # Save the audio stream returned by Amazon Polly on Lambda's temp
-        # directory. If there are multiple text blocks, the audio stream
-        # is combined into a single file.
-        if "AudioStream" in response:
-            with closing(response["AudioStream"]) as stream:
-                output = os.path.join("/tmp/", messageId)
-                with open(output, "wb") as file:
-                    file.write(stream.read())
+    pollyResponse = polly.synthesize_speech(
+        OutputFormat='mp3',
+        Text = textToSpeak,
+        VoiceId = voice,
+        Engine="generative"
+    )
+
+    if 'AudioStream' in pollyResponse:
+        output = os.path.join("/tmp/", messageId)
+        with open(output, "wb") as file:
+        #with open('/tmp/speech.mp3', 'wb') as file:
+            file.write(pollyResponse['AudioStream'].read())
+
+    # for textBlock in textBlocks:
+    #     response = polly.synthesize_speech(
+    #         OutputFormat='mp3',
+    #         Text = textBlock,
+    #         VoiceId = voice,
+    #         Engine="generative"
+    #     )
+    #     # Save the audio stream returned by Amazon Polly on Lambda's temp
+    #     # directory. If there are multiple text blocks, the audio stream
+    #     # is combined into a single file.
+    #     if "AudioStream" in response:
+    #         with closing(response["AudioStream"]) as stream:
+    #             output = os.path.join("/tmp/", messageId)
+    #             with open(output, "wb") as file:
+    #                 file.write(stream.read())
 
     # Upload mp3 to S3 bucket
     s3 = boto3.client('s3')
@@ -56,6 +69,11 @@ def synthetize_speech(textToSpeak,messageId):
         response = s3.upload_file('/tmp/' + messageId,
             MESSAGE_BUCKET,
             messageId + ".mp3")
+        response = s3.put_object(
+            Bucket=MESSAGE_BUCKET,
+            Key=messageId + ".txt",
+            Body=text,
+        )
 
     except ClientError as e:
         logger.error("Mp3 output couldn't be saved: ", e)

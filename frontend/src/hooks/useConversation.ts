@@ -18,7 +18,6 @@ const useConversation = () => {
       );
     },
     getBotId: (conversationId: string) => {
-      console.log("Conversation: ", conversations)
       return conversations?.find((c) => c.id === conversationId)?.botId ?? null;
     },
     deleteConversation: (conversationId: string) => {
