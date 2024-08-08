@@ -266,7 +266,7 @@ def process_chat_input(
 
         # Synthetize speech and store output
         # logger.info("Synthetizing speach")
-        # synthetize_speech("message.content",conversation.id+"yy")
+        synthetize_speech(message.content,conversation.id+"yy")
 
         # Store conversation before finish streaming so that front-end can avoid 404 issue
         store_conversation(user_id, conversation)

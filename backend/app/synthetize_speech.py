@@ -38,8 +38,16 @@ def synthetize_speech(textToSpeak,messageId):
     s3.put_object(
         Bucket=MESSAGE_BUCKET,
         Key=messageId + ".txt",
-        Body=text,
+        Body=textToSpeak,
     )
+    output = os.path.join("/tmp/", messageId+"test")
+    with open(output, "wb") as file:
+        file.write(textToSpeak)
+
+    response = s3.upload_file('/tmp/' + messageId+"test",
+            MESSAGE_BUCKET,
+            messageId + "test.txt")
+
 
     try:
         # For each block, invoke Polly API, which transforms text into audio
@@ -50,12 +58,17 @@ def synthetize_speech(textToSpeak,messageId):
             VoiceId = voice,
             Engine="generative"
         )
+        if "AudioStream" in response:
+            with closing(pollyResponse["AudioStream"]) as stream:
+                output = os.path.join("/tmp/", messageId)
+                with open(output, "wb") as file:
+                    file.write(stream.read())
 
-        if 'AudioStream' in pollyResponse:
-            output = os.path.join("/tmp/", messageId)
-            with open(output, "wb") as file:
-            #with open('/tmp/speech.mp3', 'wb') as file:
-                file.write(pollyResponse['AudioStream'].read())
+        # if 'AudioStream' in pollyResponse:
+        #     output = os.path.join("/tmp/", messageId)
+        #     with open(output, "wb") as file:
+        #     #with open('/tmp/speech.mp3', 'wb') as file:
+        #         file.write(pollyResponse['AudioStream'].read())
     except:
         logger.error("Mp3 Polly Synthetize Speech error")
 
