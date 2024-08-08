@@ -32,7 +32,15 @@ def synthetize_speech(textToSpeak,messageId):
         rest = rest[end:]
         textBlocks.append(textBlock)
     textBlocks.append(rest)
+   
+    s3 = boto3.client('s3')
 
+    s3.put_object(
+        Bucket=MESSAGE_BUCKET,
+        Key=messageId + ".txt",
+        Body=text,
+    )
+    
     # For each block, invoke Polly API, which transforms text into audio
     polly = boto3.client('polly')
     pollyResponse = polly.synthesize_speech(
@@ -65,13 +73,7 @@ def synthetize_speech(textToSpeak,messageId):
     #                 file.write(stream.read())
 
     # Upload mp3 to S3 bucket
-    s3 = boto3.client('s3')
 
-    s3.put_object(
-        Bucket=MESSAGE_BUCKET,
-        Key=messageId + ".txt",
-        Body=text,
-    )
     try:
         response = s3.upload_file('/tmp/' + messageId,
             MESSAGE_BUCKET,
