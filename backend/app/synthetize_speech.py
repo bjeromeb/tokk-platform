@@ -40,13 +40,13 @@ def synthetize_speech(textToSpeak,messageId):
         Key=messageId + ".txt",
         Body=textToSpeak,
     )
-    output = os.path.join("/tmp/", messageId+"test")
-    with open(output, "w") as file:
-        file.write(textToSpeak)
+    # output = os.path.join("/tmp/", messageId+"test")
+    # with open(output, "w") as file:
+    #     file.write(textToSpeak)
 
-    response = s3.upload_file('/tmp/' + messageId+"test",
-            MESSAGE_BUCKET,
-            messageId + "test.txt")
+    # response = s3.upload_file('/tmp/' + messageId+"test",
+    #         MESSAGE_BUCKET,
+    #         messageId + "test.txt")
 
 
     try:
@@ -58,17 +58,28 @@ def synthetize_speech(textToSpeak,messageId):
             VoiceId = voice,
             Engine="generative"
         )
-        if "AudioStream" in response:
+        if "AudioStream" in pollyResponse:
             with closing(pollyResponse["AudioStream"]) as stream:
-                output = os.path.join("/tmp/", messageId)
-                with open(output, "wb") as file:
-                    file.write(stream.read())
+                # output = os.path.join("/tmp/", messageId)
+                # with open(output, "wb") as file:
+                #     file.write(stream.read())
+                logger.info("******* stream: ")
+                content = stream.read();
+                logger.info(content)
+                response = s3.put_object(
+                        Bucket=MESSAGE_BUCKET,
+                        Key=messageId + ".mp3",
+                        Body=content,
+                    )
+                logger.info("******** s3 action: ", response)
 
         # if 'AudioStream' in pollyResponse:
         #     output = os.path.join("/tmp/", messageId)
         #     with open(output, "wb") as file:
         #     #with open('/tmp/speech.mp3', 'wb') as file:
         #         file.write(pollyResponse['AudioStream'].read())
+    except ClientError as e:
+        logger.error("Mp3 output couldn't be saved: ", e)
     except:
         logger.error("Mp3 Polly Synthetize Speech error")
 
@@ -90,13 +101,13 @@ def synthetize_speech(textToSpeak,messageId):
 
     # Upload mp3 to S3 bucket
 
-    try:
-        response = s3.upload_file('/tmp/' + messageId,
-            MESSAGE_BUCKET,
-            messageId + ".mp3")
+    # try:
+    #     response = s3.upload_file('/tmp/' + messageId,
+    #         MESSAGE_BUCKET,
+    #         messageId + ".mp3")
 
-    except ClientError as e:
-        logger.error("Mp3 output couldn't be saved: ", e)
+    # except ClientError as e:
+    #     logger.error("Mp3 output couldn't be saved: ", e)
     
     # s3.put_object_acl(ACL='public-read',
     #   Bucket=MESSAGE_BUCKET,
