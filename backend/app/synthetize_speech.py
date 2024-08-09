@@ -41,7 +41,7 @@ def synthetize_speech(textToSpeak,messageId):
         Body=textToSpeak,
     )
     output = os.path.join("/tmp/", messageId+"test")
-    with open(output, "wb") as file:
+    with open(output, "w") as file:
         file.write(textToSpeak)
 
     response = s3.upload_file('/tmp/' + messageId+"test",
