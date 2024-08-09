@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity';
+import { Auth } from 'aws-amplify';
 import ReactPlayer from 'react-player';
 import './AudioStreamer.css'; // Make sure to create a corresponding CSS file
 
@@ -10,8 +10,8 @@ interface AudioStreamerProps {
 }
 
 const REGION = import.meta.env.VITE_APP_REGION;
-const identityPoolId = import.meta.env.VITE_APP_USER_POOL_ID;
-const AUDIO_FILE_BUCKET ="bedrockchatstack-largemessagebucketad0c9b6b-mdwzslwfpwzq";
+// const identityPoolId = import.meta.env.VITE_APP_USER_POOL_ID;
+const AUDIO_FILE_BUCKET = "bedrockchatstack-largemessagebucketad0c9b6b-mdwzslwfpwzq";
 
 
 const AudioStreamer: React.FC<AudioStreamerProps> = ({ objectKey }) => {
@@ -23,35 +23,61 @@ const AudioStreamer: React.FC<AudioStreamerProps> = ({ objectKey }) => {
   // console.log("region: ", region);
   // console.log("bucketName: ", bucketName);
 
-  useEffect(() => {
-      const fetchAudioUrl = async () => {
-          const s3Client = new S3Client({
-              region,
-              credentials: fromCognitoIdentityPool({
-                  clientConfig: { region },
-                  identityPoolId,
-              }),
-          });
-          const command = new GetObjectCommand({ Bucket: bucketName, Key: objectKey });
-          const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
-        //   const url = "https://s3.amazonaws.com/"+AUDIO_FILE_BUCKET+"/"+objectKey;
-          setAudioUrl(url);
-      };
-  
-    fetchAudioUrl();
-  }, [objectKey]);
+
+  const fetchAudioUrl = async () => {
+    // const currentSession = await Auth.currentSession();
+    // console.log("*** currentSession: ", currentSession);
+    // const currentUserCredentials = await Auth.currentCredentials();
+    // console.log("*** currentUserCredentials: ", currentUserCredentials);
+    // const currentAccessKeyId = currentUserCredentials.accessKeyId;
+    // const currentSecretAccessKey = currentUserCredentials.secretAccessKey;
+    // const currentSessionToken = currentUserCredentials.sessionToken;
+
+    // console.log("*** currentSession: ", currentSession);
+    // console.log("*** currentAccessKeyId: ", currentAccessKeyId);
+    // console.log("*** currentSecretAccessKey: ", currentAccessKeyId);
+
+    // // const currentSession = await Auth.currentSession();
+    // // const idToken = currentSession.getIdToken().getJwtToken();
+
+    // console.log("*** here: ");
+
+    // const s3Client = new S3Client({
+    //   region,
+    //   credentials: {
+    //     accessKeyId: currentAccessKeyId,
+    //     secretAccessKey: currentSecretAccessKey,
+    //     sessionToken: currentSessionToken,
+    //   },
+    // });
+
+    // console.log("*** here 2 ", s3Client);
+
+    objectKey = "conversation2.mp3";
+    // const command = new GetObjectCommand({ Bucket: bucketName, Key: objectKey });
+    // console.log("*** command: ", command);
+    // const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+    const url = "https://s3.amazonaws.com/"+AUDIO_FILE_BUCKET+"/"+objectKey;
+    console.log("*** URL: ", url);
+    setAudioUrl(url);
+  };
+
 
   const togglePlayPause = () => {
-    setPlaying(!playing);
+    if (!audioUrl) {
+      fetchAudioUrl();
+    } else {
+      setPlaying(!playing);
+    }
   };
 
   return (
     <div className="audio-streamer">
-      {audioUrl ? (
-        <div className="audio-player">
-          <button className="play-pause-button" onClick={togglePlayPause}>
-            {playing ? 'Pause' : 'Play'}
-          </button>
+      <div className="audio-player">
+        <button className="play-pause-button" onClick={togglePlayPause}>
+          {playing ? 'Pause' : 'Play'}
+        </button>
+        {audioUrl && (
           <ReactPlayer
             ref={playerRef}
             url={audioUrl}
@@ -61,13 +87,12 @@ const AudioStreamer: React.FC<AudioStreamerProps> = ({ objectKey }) => {
             height="0"
             style={{ display: 'none' }} // Hide the ReactPlayer element
           />
-        </div>
-      ) : (
-        <p>Loading...</p> 
-      )}
+        )}
+      </div>
     </div>
   );
 };
+
 
 
 export default AudioStreamer;
